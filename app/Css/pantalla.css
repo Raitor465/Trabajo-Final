@@ -1,0 +1,50 @@
+/* recursos parte superior */
+.horizontal-list-container {
+    display: flex; /* Alinear horizontalmente */
+    gap: 20px; /* Espacio entre cada "nombre : cantidad" */
+  }
+  
+  .list-item {
+    /* Estilo básico para cada elemento */
+    padding: 5px;
+  }
+  
+  .item-text {
+    /* Estilo para texto que contiene nombre y cantidad */
+    white-space: nowrap; /* Evita el salto de línea, todo en una línea */
+    font-family: Arial, sans-serif;
+  }
+
+  /* botones */
+  .button-group-container {
+    display: flex; /* Usa Flexbox para alinear horizontalmente */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    gap: 20px; /* Espacio entre botones */
+    height: 100vh; /* Altura para centrar en toda la pantalla */
+  }
+  
+  .button-item {
+    padding: 10px 20px; /* Espaciado dentro del botón */
+    border: 1px solid gray; /* Borde para visibilidad */
+    background-color: lightgray; /* Color de fondo */
+    cursor: pointer; /* Cambio de cursor al pasar por encima */
+  }
+
+  /* boton grande con pequeños de menu edificios */
+  .large-circle {
+    position: relative; /* Para que los círculos pequeños se posicionen dentro */
+    width: 200px; /* Tamaño del círculo */
+    height: 200px; /* Tamaño del círculo */
+    border: 2px solid black; /* Borde para el círculo grande */
+    border-radius: 50%; /* Hace que sea un círculo */
+  }
+  
+  .small-circle {
+    position: absolute; /* Para posicionar los círculos pequeños */
+    width: 40px; /* Tamaño del círculo pequeño */
+    height: 40px; /* Tamaño del círculo pequeño */
+    background-color: red; /* Color del círculo pequeño */
+    border-radius: 50%; /* Hace que sea un círculo */
+  }
+  
