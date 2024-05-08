@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./bto-emptyground"; // Asegúrate de importar el componente correcto
+import Button from "./ui/Button";
 
 interface ButtonGridProps {
   buttons: { text: string; onClick: () => void }[];

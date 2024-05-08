@@ -22,8 +22,8 @@ export const findRecusoByCantidad = async (cantidad: number) => {
     return recursoList.find(c => c.cantidad === cantidad)
   }
 
-export const getRecursoList = async (): Promise<{ list: Recurso[] }> => {
-    return { list: recursoList }; // Devolver la lista
+export const getRecursoList = async (): Promise<Recurso[] > => {
+    return recursoList  // Devolver la lista
   };
 
 
