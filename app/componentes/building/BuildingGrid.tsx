@@ -9,12 +9,11 @@ interface Props {
 
 const BuildingGrid: React.FC<Props> = ({ buildingImages, onEmptyGroundClick }) => {
   const baseBuildingStyle = {
-    backgroundImage: `../../../placeholders/base_ph.png`,
+    backgroundImage: `../../placeholders/base_ph.png`,
   };
 
   const emptyGroundStyle = (index: number) => {
-    const imageUrl = buildingImages[index] || `../../../placeholders/base_ph.png`;
-    console.log(imageUrl)
+    const imageUrl = buildingImages[index] || `../../placeholders/base_ph.png`;
     return {
       backgroundImage: `${imageUrl}`,
     };
