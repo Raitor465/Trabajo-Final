@@ -1,21 +1,32 @@
 // BuildingGrid.tsx
 import React, { useState } from "react";
 import { Edificios } from "../../services/edificios-menu";
+import baseimage from '../../public/placeholders/base_ph.png'
+import vacioimage from '../../public/placeholders/empty_ground_ph.png'
+import { StaticImageData } from "next/image";
 
 interface Props {
-  buildingImages: (string | null)[];
+  buildingImages: (StaticImageData | null) [];
   onEmptyGroundClick: (index: number) => void;
 }
 
-const BuildingGrid: React.FC<Props> = ({ buildingImages, onEmptyGroundClick }) => {
+const BuildingGrid: React.FC<Props> = ({buildingImages = [], onEmptyGroundClick }) => {
+  if (buildingImages.length == 0){
+    buildingImages = [vacioimage,baseimage,vacioimage];
+  }
+  // }else{
+  //   buildingImages[buildingImages.length/2] = baseimage;
+  // }
+  
   const baseBuildingStyle = {
-    backgroundImage: `../../placeholders/base_ph.png`,
+    backgroundImage: `url(${buildingImages[1]?.src})`,
   };
 
+  // console.log(buildingImages)
   const emptyGroundStyle = (index: number) => {
-    const imageUrl = buildingImages[index] || `../../placeholders/base_ph.png`;
+    const imageUrl = buildingImages[index];
     return {
-      backgroundImage: `${imageUrl}`,
+      backgroundImage: `url(${imageUrl?.src})`,
     };
   };
 

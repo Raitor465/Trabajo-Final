@@ -9,7 +9,7 @@ interface Props {
 
 const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick }) => {
   return (
-    <div className=" p-5">
+    <div className="p-5">
       {edificios.map((edificio, index) => (
         <div
           key={edificio.id}

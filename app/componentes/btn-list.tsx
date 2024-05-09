@@ -7,7 +7,7 @@ interface ButtonGridProps {
 
 const ButtonGrid: React.FC<ButtonGridProps> = ({ buttons }) => {
   return (
-    <div style={{ display: "flex" }}>
+    <div>
       {buttons.map((button, index) => (
         <Button key={index} onClick={button.onClick} text={button.text} />
       ))}
