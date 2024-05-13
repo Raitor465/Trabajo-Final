@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Edificios } from "../../services/edificios-menu";
 import baseimage from '../../public/placeholders/base_ph.png'
-import vacioimage from '../../public/placeholders/empty_ground_ph.png'
+//import vacioimage from '../../public/placeholders/empty_ground_ph.png'
 import { StaticImageData } from "next/image";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 
 const BuildingGrid: React.FC<Props> = ({buildingImages = [], onEmptyGroundClick }) => {
   if (buildingImages.length == 0){
-    buildingImages = [vacioimage,baseimage,vacioimage];
+    buildingImages = [null,baseimage,null];
   }
   // }else{
   //   buildingImages[buildingImages.length/2] = baseimage;
@@ -36,7 +36,7 @@ const BuildingGrid: React.FC<Props> = ({buildingImages = [], onEmptyGroundClick 
         <div
           key={index}
           style={index === 1 ? baseBuildingStyle : emptyGroundStyle(index)}
-          className="h-48 w-48 bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-10"
+          className="h-48 w-48 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-5"
           onClick={() => onEmptyGroundClick(index)}
         ></div>
       ))}
