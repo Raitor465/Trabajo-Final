@@ -83,7 +83,7 @@ import BuildingGrid from "./building/BuildingGrid";
 import Resources from "./Resources";
 import Button from "./ui/Button";
 import { StaticImageData } from "next/image";
-import baseimg from "../../public/placeholders/base_ph.png"
+import baseimg from '../componentes/images/placeholders/base_ph.png'
 
 interface MapProps {
   recursos: Recurso[];
@@ -91,7 +91,7 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({recursos, edificios}) => {
-  const [buildingImages, setBuildingImages] = useState(Array.from({ length: 5 }).fill(''));
+  const [buildingImages, setBuildingImages] = useState<string[]>(Array.from({ length: 5 }, () => ''));
   const [showBuildMenu, setShowBuildMenu] = useState(false);
   const [showConstruir, setShowConstruir] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState<Edificio>();
@@ -109,7 +109,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
 
   const handleConstruirClick = (index: number) => {
     const newBuildingImages = [...buildingImages];
-    newBuildingImages[2] = baseimg;
+    newBuildingImages[2] = '/placeholders/base_ph.png';
     const selectedImage = selectedBuilding?.imagen || null;
     if (selectedImage !== null && index !== 1){
       newBuildingImages[index] = selectedImage;

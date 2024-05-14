@@ -1,6 +1,5 @@
 
 import Map from "./componentes/Map";
-import { getEdificiosList } from "./services/edificios-menu";
 import { getRecursoList } from "./services/recursos";
 export default async function Home() {
   const recursosData = await getRecursoList();

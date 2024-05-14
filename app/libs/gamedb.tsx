@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 
 export async function connectDB() {
-    await mongoose.connect("mongodb://localhost:27017/tpfinal");
-    //await mongoose.connect(process.env.MONGODB_URL ? process.env.MONGODB_URL : (() => { throw new Error("MONGODB_URL no definida"); })())
-} 
+    const mongodbUrl = process.env.MONGODB_URL;
+
+    if (!mongodbUrl) {
+        throw new Error("La variable de entorno MONGODB_URL no está definida");
+    }
+
+    await mongoose.connect(mongodbUrl);
+    console.log("MongoDB conectado")
+}
+ 

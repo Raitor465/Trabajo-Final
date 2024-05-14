@@ -8,15 +8,6 @@ interface Props {
   onItemClick: (index: number) => void;
 }
 
-async function loadBuildings(){
-  await connectDB()
-  const edificios = await Edificios.find()
-  edificios.shift() // Elimina el primer edificio de la lista, que es el de la base
-  return edificios
-}
-
-const edificioLista = loadBuildings()
-
 const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick }) => {
   return (
     <div className="p-5">
