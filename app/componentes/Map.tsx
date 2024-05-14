@@ -83,7 +83,12 @@ import BuildingGrid from "./building/BuildingGrid";
 import Resources from "./Resources";
 import Button from "./ui/Button";
 import { StaticImageData } from "next/image";
-import baseimg from '../componentes/images/placeholders/base_ph.png'
+//<<<<<<< funcionalidad-edificios
+import baseimg from "../public/placeholders/base_ph.png"
+import marcostarcrf2 from "../public/placeholders/marco-starcraft2-png.png"
+//=======
+//import baseimg from '../componentes/images/placeholders/base_ph.png'
+//>>>>>>> page-organizado-componentes
 
 interface MapProps {
   recursos: Recurso[];
@@ -124,18 +129,24 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
         <div className="flex justify-start items-start bg-black">
           <Resources items={recursos} />
         </div>
-        <div className=" flex flex-1 flex-col justify-end items-center">
+        <div className="flex flex-1 flex-col justify-end items-center relative">
           <BuildingGrid buildingImages={buildingImages} onEmptyGroundClick={handleEmptyGroundClick} />
-          <div className="h-48 w-screen flex  bg-slate-600">
+          <div className="h-48 w-screen flex relative">
+            {/* Imagen de starcraf2 */}
+            <img src={marcostarcrf2.src} alt="marco de abajo" className="w-full h-48" />
+  
+            {/* Contenedor de la imagen y la parte superior de BuildingMenu */}
             {showBuildMenu && (
-              <div className="w-1/2 bg-white">
-                <BuildingMenu edificios={edificios} onItemClick={handleItemClick} />
-                {showConstruir && (
-                  <div className="flex flex-row justify-end items-end">
-                    <Button onClick={() => handleConstruirClick(selectedGround || 0)} text={"Construir"} className="bg-green-600 mr-1"/>
-                    <Button onClick={() => setShowBuildMenu(false)} text={"Cancelar"} className="bg-red-600 mr-2"/>
-                  </div>
-                )}
+              <div className="absolute top-0 w-full">
+                <div className="w-1/2 ">
+                  <BuildingMenu edificios={edificios} onItemClick={handleItemClick} />
+                  {showConstruir && (
+                    <div className="flex flex-row justify-end items-end">
+                      <Button onClick={() => handleConstruirClick(selectedGround || 0)} text={"Construir"} className="bg-green-600 mr-1"/>
+                      <Button onClick={() => setShowBuildMenu(false)} text={"Cancelar"} className="bg-red-600 mr-2"/>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
