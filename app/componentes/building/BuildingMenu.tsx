@@ -1,22 +1,23 @@
 // BuildingMenu.tsx
 import React from "react";
-import { Edificios } from "../../services/edificios-menu";
+import Edificios, { Edificio } from "../../models/edificios";
+import { connectDB } from "@/app/libs/gamedb";
 
 interface Props {
-  edificios: Edificios[];
+  edificios: Edificio[],
   onItemClick: (index: number) => void;
 }
 
 const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick }) => {
   return (
     <div className="p-5">
-      {edificios.map((edificio, index) => (
+      {edificios.map((edificioLista, index) => (
         <div
-          key={edificio.id}
+          key={edificioLista.id}
           className="item-text bg-black cursor-pointer hover:bg-opacity-50"
           onClick={() => onItemClick(index)}
         >
-          {edificio.name} : {edificio.descripcion}
+          {edificioLista.name} : {edificioLista.descripcion}
         </div>
       ))}
     </div>

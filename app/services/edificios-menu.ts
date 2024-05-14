@@ -1,8 +1,8 @@
 'use server'
 import { StaticImageData } from "next/image"
-import pozoimg from "../public/placeholders/pozo_ph.png"
+import pozoimg from "../componentes/images/placeholders/pozo_ph.png"
 import criaimg from "../public/placeholders/criadero_ph.png"
-import chataimg from "../public/placeholders/chatarra_ph.png"
+import chataimg from '../public/placeholders/criadero_ph.png'
 
 
 export type Edificios = {
