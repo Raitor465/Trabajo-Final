@@ -77,7 +77,7 @@
 'use client'
 import React, { useState } from "react";
 import { Recurso } from "../services/recursos";
-import { Edificio } from "../models/edificios";
+//import { Edificio } from "../models/edificios";
 import BuildingMenu from "./building/BuildingMenu";
 import BuildingGrid from "./building/BuildingGrid";
 import Resources from "./Resources";
@@ -86,20 +86,21 @@ import { StaticImageData } from "next/image";
 //<<<<<<< funcionalidad-edificios
 import baseimg from "../public/placeholders/base_ph.png"
 import marcostarcrf2 from "../public/placeholders/marco-starcraft2-png.png"
+import { Edificios_menu } from "../services/edificios-menu";
 //=======
 //import baseimg from '../componentes/images/placeholders/base_ph.png'
 //>>>>>>> page-organizado-componentes
 
 interface MapProps {
   recursos: Recurso[];
-  edificios: Edificio[];
+  edificios: Edificios_menu[];
 }
 
 const Map: React.FC<MapProps> = ({recursos, edificios}) => {
   const [buildingImages, setBuildingImages] = useState<string[]>(Array.from({ length: 5 }, () => ''));
   const [showBuildMenu, setShowBuildMenu] = useState(false);
   const [showConstruir, setShowConstruir] = useState(false);
-  const [selectedBuilding, setSelectedBuilding] = useState<Edificio>();
+  const [selectedBuilding, setSelectedBuilding] = useState<Edificios_menu>();
   const [selectedGround, setSelectedGround] = useState<number>();
   
   const handleEmptyGroundClick = (index: number) => {
@@ -115,7 +116,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
   const handleConstruirClick = (index: number) => {
     const newBuildingImages = [...buildingImages];
     newBuildingImages[2] = '/placeholders/base_ph.png';
-    const selectedImage = selectedBuilding?.imagen || null;
+    const selectedImage = selectedBuilding?.imagen.src || null;
     if (selectedImage !== null && index !== 1){
       newBuildingImages[index] = selectedImage;
       setBuildingImages(newBuildingImages);

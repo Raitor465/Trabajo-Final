@@ -1,16 +1,15 @@
 //<<<<<<< funcionalidad-edificios
 import React, { useState, useEffect } from "react";
-import { Edificios } from "../../services/edificios-menu";
+import { Edificios_menu } from "../../services/edificios-menu";
 import { Recurso, actualizarRecurso, findRecursoByName, getRecursoList } from "../../services/recursos";
 //=======
 // BuildingMenu.tsx
-import React from "react";
-import Edificios, { Edificio } from "../../models/edificios";
+//import Edificios, { Edificio } from "../../models/edificios";
 import { connectDB } from "@/app/libs/gamedb";
 //>>>>>>> page-organizado-componentes
 
 interface Props {
-  edificios: Edificio[],
+  edificios: Edificios_menu[],
   onItemClick: (index: number) => void;
 }
 

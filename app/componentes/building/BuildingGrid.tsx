@@ -1,8 +1,8 @@
 // BuildingGrid.tsx
 import React, { useState } from "react";
-import { Edificios } from "../../services/edificios-menu";
+import { Edificios_menu } from "../../services/edificios-menu";
 import baseimage from '../images/placeholders/base_ph.png'
-//import vacioimage from '../../public/placeholders/empty_ground_ph.png'
+import vacioimage from '../../public/placeholders/empty_ground_ph.png'
 import { StaticImageData } from "next/image";
 
 
