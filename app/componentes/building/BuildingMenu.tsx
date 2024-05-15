@@ -4,6 +4,29 @@ import { Edificios_menu } from "../../services/edificios-menu";
 import { Recurso, actualizarRecurso, findRecursoByName, getRecursoList } from "../../services/recursos";
 //=======
 // BuildingMenu.tsx
+//<<<<<<< prueba-db
+import React, { useEffect, useState } from "react";
+import { EdificioType } from "../../models/edificios";
+interface Props {
+  onItemClick: (index: number) => void;
+}
+
+const BuildingMenu: React.FC<Props> = ({ onItemClick }) => {
+  
+  const [edificiosList, setEdificiosList] = useState<EdificioType[]>([]);
+
+  useEffect(() => {
+    const fetchBuildings = async () => {
+      const response = await fetch('http://localhost:3000/api/buildings');
+      const data: EdificioType[] = await response.json()
+      data.shift()
+      setEdificiosList(data);
+    };
+
+    fetchBuildings();
+  }, []);
+
+//=======
 //import Edificios, { Edificio } from "../../models/edificios";
 import { connectDB } from "@/app/libs/gamedb";
 //>>>>>>> page-organizado-componentes
@@ -64,15 +87,16 @@ const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick }) => {
     }
   };
   
+//>>>>>>> page-organizado-componentes
   return (
     <div className="p-5">
-      {edificios.map((edificioLista, index) => (
+      {edificiosList.map((edificio, index) => (
         <div
-          key={edificioLista.id}
+          key={edificio.id}
           className="item-text bg-black cursor-pointer hover:bg-opacity-50"
           onClick={() => handleItemClick(index)} // Aquí llamamos a la función handleItemClick en lugar de onItemClick directamente
         >
-          {edificioLista.name} : {edificioLista.descripcion}
+          {edificio.name} : {edificio.descripcion}
         </div>
       ))}
     </div>

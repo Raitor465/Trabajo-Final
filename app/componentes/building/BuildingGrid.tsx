@@ -1,39 +1,49 @@
 // BuildingGrid.tsx
+//<<<<<<< prueba-db
+import React, { useState, useEffect } from "react";
+import { EdificioType } from "@/app/models/edificios";
+import { partidaActual } from "@/app/services/partida-seleccionada";
+//import Partidas, { PartidaType } from "@/app/models/partidas";
+//import { Edificios } from "../../services/edificios-menu";
+//import baseimage from '../images/placeholders/base_ph.png'
+//import vacioimage from '../../public/placeholders/empty_ground_ph.png'
+//import { StaticImageData } from "next/image";
+//=======
 import React, { useState } from "react";
 import { Edificios_menu } from "../../services/edificios-menu";
 import baseimage from '../images/placeholders/base_ph.png'
 import vacioimage from '../../public/placeholders/empty_ground_ph.png'
 import { StaticImageData } from "next/image";
+//>>>>>>> page-organizado-componentes
 
 
 interface Props {
-  buildingImages: (string | null) [];
   onEmptyGroundClick: (index: number) => void;
 }
 
-const BuildingGrid: React.FC<Props> = ({buildingImages = [], onEmptyGroundClick }) => {
-  if (buildingImages.length == 0){
-    buildingImages = ['','/placeholders/base_ph.png','null'];
-  }
-  // }else{
-  //   buildingImages[buildingImages.length/2] = baseimage;
-  // }
-  
+const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick }) => {
+
+  const [edificiosPartida, setEdificiosPartida] = useState<EdificioType[]>([]); 
+
+  // partidaActual?.terreno
+    
+  // });
+
   const baseBuildingStyle = {
-    backgroundImage: `url(${buildingImages[1]})`,
+    //backgroundImage: `url(${partidaActual?.terreno[1]})`,
   };
 
   // console.log(buildingImages)
   const emptyGroundStyle = (index: number) => {
-    const imageUrl = buildingImages[index];
+    //const imageUrl = partidaActual?.terreno[index];
     return {
-      backgroundImage: `url(${imageUrl})`,
+      //backgroundImage: `url(${imageUrl})`,
     };
   };
 
   return (
     <div className="flex flex-row">
-      {Array.from({ length: 3 }).map((_, index) => (
+      {edificiosPartida.map((_, index) => (
         <div
           key={index}
           style={index === 1 ? baseBuildingStyle : emptyGroundStyle(index)}
