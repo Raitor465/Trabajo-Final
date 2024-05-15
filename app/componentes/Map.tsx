@@ -85,7 +85,6 @@ import Button from "./ui/Button";
 import { StaticImageData } from "next/image";
 //<<<<<<< funcionalidad-edificios
 import baseimg from "../public/placeholders/base_ph.png"
-import marcostarcrf2 from "../public/placeholders/marco-starcraft2-png.png"
 import { Edificios_menu } from "../services/edificios-menu";
 //=======
 //import baseimg from '../componentes/images/placeholders/base_ph.png'
@@ -115,7 +114,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
 
   const handleConstruirClick = (index: number) => {
     const newBuildingImages = [...buildingImages];
-    newBuildingImages[2] = '/placeholders/base_ph.png';
+    newBuildingImages[1] = '/placeholders/base_ph.png';
     const selectedImage = selectedBuilding?.imagen.src || null;
     if (selectedImage !== null && index !== 1){
       newBuildingImages[index] = selectedImage;
@@ -134,7 +133,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
           <BuildingGrid buildingImages={buildingImages} onEmptyGroundClick={handleEmptyGroundClick} />
           <div className="h-48 w-screen flex relative">
             {/* Imagen de starcraf2 */}
-            <img src={marcostarcrf2.src} alt="marco de abajo" className="w-full h-48" />
+            <img src="/placeholders/marco-starcraft2-png.png" alt="marco de abajo" className="w-full h-48" />
   
             {/* Contenedor de la imagen y la parte superior de BuildingMenu */}
             {showBuildMenu && (
