@@ -1,4 +1,5 @@
 // BuildingGrid.tsx
+//<<<<<<< prueba-db
 import React, { useState, useEffect } from "react";
 import { EdificioType } from "@/app/models/edificios";
 import { partidaActual } from "@/app/services/partida-seleccionada";
@@ -7,6 +8,13 @@ import { partidaActual } from "@/app/services/partida-seleccionada";
 //import baseimage from '../images/placeholders/base_ph.png'
 //import vacioimage from '../../public/placeholders/empty_ground_ph.png'
 //import { StaticImageData } from "next/image";
+//=======
+import React, { useState } from "react";
+import { Edificios_menu } from "../../services/edificios-menu";
+import baseimage from '../images/placeholders/base_ph.png'
+import vacioimage from '../../public/placeholders/empty_ground_ph.png'
+import { StaticImageData } from "next/image";
+//>>>>>>> page-organizado-componentes
 
 
 interface Props {
