@@ -1,23 +1,34 @@
 // BuildingMenu.tsx
-import React from "react";
-import Edificios, { Edificio } from "../../models/edificios";
-import { connectDB } from "@/app/libs/gamedb";
-
+import React, { useEffect, useState } from "react";
+import { EdificioType } from "../../models/edificios";
 interface Props {
-  edificios: Edificio[],
   onItemClick: (index: number) => void;
 }
 
-const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick }) => {
+const BuildingMenu: React.FC<Props> = ({ onItemClick }) => {
+  
+  const [edificiosList, setEdificiosList] = useState<EdificioType[]>([]);
+
+  useEffect(() => {
+    const fetchBuildings = async () => {
+      const response = await fetch('http://localhost:3000/api/buildings');
+      const data: EdificioType[] = await response.json()
+      data.shift()
+      setEdificiosList(data);
+    };
+
+    fetchBuildings();
+  }, []);
+
   return (
     <div className="p-5">
-      {edificios.map((edificioLista, index) => (
+      {edificiosList.map((edificio, index) => (
         <div
-          key={edificioLista.id}
+          key={edificio.id}
           className="item-text bg-black cursor-pointer hover:bg-opacity-50"
           onClick={() => onItemClick(index)}
         >
-          {edificioLista.name} : {edificioLista.descripcion}
+          {edificio.name} : {edificio.descripcion}
         </div>
       ))}
     </div>

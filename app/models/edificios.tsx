@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-export type Edificio = {
+export type EdificioType = {
     id: number;
     name: string;
     descripcion: string;
     imagen: string;
 }
 
-const schema = new mongoose.Schema<Edificio>({
+const schema = new mongoose.Schema<EdificioType>({
     id: Number,
     name: String,
     descripcion: String,
