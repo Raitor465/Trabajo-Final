@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PartidaType } from "../models/partidas";
 
-export const [partida, setPartida] = useState<PartidaType>();
+export const [partidaActual, setPartida] = useState<PartidaType>();
 
 useEffect(() => {
     const fetchSave = async () => {

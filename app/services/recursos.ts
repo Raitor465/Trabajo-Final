@@ -2,12 +2,11 @@
 export type Recurso = {
   id: number
   name: string
-  cantidad: number
 }
 const recursoList: Recurso[] = [
-  { id: 1, name: 'Agua', cantidad: 500  },
-  { id: 2, name: 'Comida', cantidad: 500 },
-  { id: 3, name: 'Chatarra', cantidad: 500 },
+  { id: 1, name: 'Agua'  },
+  { id: 2, name: 'Comida' },
+  { id: 3, name: 'Chatarra' },
 ]
 
 export const findRecusoById = async (id: number) => {
@@ -17,10 +16,6 @@ export const findRecusoById = async (id: number) => {
 export const findRecusoByName = async (name: string) => {
   return recursoList.find(p => p.name === name)
 }
-
-export const findRecusoByCantidad = async (cantidad: number) => {
-    return recursoList.find(c => c.cantidad === cantidad)
-  }
 
 export const getRecursoList = async (): Promise<Recurso[] > => {
     return recursoList  // Devolver la lista

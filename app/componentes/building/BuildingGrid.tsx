@@ -1,12 +1,12 @@
 // BuildingGrid.tsx
 import React, { useState, useEffect } from "react";
 import { EdificioType } from "@/app/models/edificios";
-import { partida } from "@/app/services/partida-seleccionada";
-import Partidas, { PartidaType } from "@/app/models/partidas";
-import { Edificios } from "../../services/edificios-menu";
-import baseimage from '../images/placeholders/base_ph.png'
+import { partidaActual } from "@/app/services/partida-seleccionada";
+//import Partidas, { PartidaType } from "@/app/models/partidas";
+//import { Edificios } from "../../services/edificios-menu";
+//import baseimage from '../images/placeholders/base_ph.png'
 //import vacioimage from '../../public/placeholders/empty_ground_ph.png'
-import { StaticImageData } from "next/image";
+//import { StaticImageData } from "next/image";
 
 
 interface Props {
@@ -14,24 +14,28 @@ interface Props {
 }
 
 const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick }) => {
-  
+
   const [edificiosPartida, setEdificiosPartida] = useState<EdificioType[]>([]); 
-  
+
+  // partidaActual?.terreno
+    
+  // });
+
   const baseBuildingStyle = {
-    backgroundImage: `url(${buildingImages[1]})`,
+    //backgroundImage: `url(${partidaActual?.terreno[1]})`,
   };
 
   // console.log(buildingImages)
   const emptyGroundStyle = (index: number) => {
-    const imageUrl = buildingImages[index];
+    //const imageUrl = partidaActual?.terreno[index];
     return {
-      backgroundImage: `url(${imageUrl})`,
+      //backgroundImage: `url(${imageUrl})`,
     };
   };
 
   return (
     <div className="flex flex-row">
-      {Array.from({ length: 3 }).map((_, index) => (
+      {edificiosPartida.map((_, index) => (
         <div
           key={index}
           style={index === 1 ? baseBuildingStyle : emptyGroundStyle(index)}
