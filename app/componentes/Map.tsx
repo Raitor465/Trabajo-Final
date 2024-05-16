@@ -76,7 +76,7 @@
 // export default Map;
 'use client'
 import React, { useState } from "react";
-import { Recurso } from "../services/recursos";
+//import { Recurso } from "../services/recursos";
 //import { Edificio } from "../models/edificios";
 import BuildingMenu from "./building/BuildingMenu";
 import BuildingGrid from "./building/BuildingGrid";
@@ -86,12 +86,13 @@ import { StaticImageData } from "next/image";
 //<<<<<<< funcionalidad-edificios
 import baseimg from "../public/placeholders/base_ph.png"
 import { Edificios_menu } from "../services/edificios-menu";
+import Partidas, { PartidaType } from "../models/partidas";
 //=======
 //import baseimg from '../componentes/images/placeholders/base_ph.png'
 //>>>>>>> page-organizado-componentes
 
 interface MapProps {
-  recursos: Recurso[];
+  recursos: PartidaType[];
   edificios: Edificios_menu[];
 }
 
@@ -127,10 +128,10 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
     <main>
       <div className="h-screen w-screen bg-slate-900 flex flex-col">
         <div className="flex justify-start items-start bg-black">
-          <Resources items={recursos} />
+          {/* <Resources items={recursos} /> */}
         </div>
         <div className="flex flex-1 flex-col justify-end items-center relative">
-          <BuildingGrid buildingImages={buildingImages} onEmptyGroundClick={handleEmptyGroundClick} />
+          {/* <BuildingGrid buildingImages={buildingImages} onEmptyGroundClick={handleEmptyGroundClick} /> */}
           <div className="h-48 w-screen flex relative">
             {/* Imagen de starcraf2 */}
             <img src="/placeholders/marco-starcraft2-png.png" alt="marco de abajo" className="w-full h-48" />
@@ -139,7 +140,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
             {showBuildMenu && (
               <div className="absolute top-0 w-full">
                 <div className="w-1/2 ">
-                  <BuildingMenu edificios={edificios} onItemClick={handleItemClick} />
+                  {/* <BuildingMenu edificios={edificios} onItemClick={handleItemClick} /> */}
                   {showConstruir && (
                     <div className="flex flex-row justify-end items-end">
                       <Button onClick={() => handleConstruirClick(selectedGround || 0)} text={"Construir"} className="bg-green-600 mr-1"/>

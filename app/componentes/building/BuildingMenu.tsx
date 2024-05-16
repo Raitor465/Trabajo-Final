@@ -1,93 +1,86 @@
-//<<<<<<< funcionalidad-edificios
 import React, { useState, useEffect } from "react";
-import { Edificios_menu } from "../../services/edificios-menu";
-import { Recurso, actualizarRecurso, findRecursoByName, getRecursoList } from "../../services/recursos";
-//=======
-// BuildingMenu.tsx
-//<<<<<<< prueba-db
-import React, { useEffect, useState } from "react";
-import { EdificioType } from "../../models/edificios";
+//import { Edificios_menu } from "../../services/edificios-menu";
+import { actualizarRecursoJugador, getRecursoList } from "../../services/recursos";
+import { connectDB } from "@/app/libs/gamedb";
+import Edificios, { EdificioType } from "../../models/edificios";
+import { PartidaType } from "@/app/models/partidas";
+
 interface Props {
   onItemClick: (index: number) => void;
+  playerId: number; //para identificar al jugador
 }
 
-const BuildingMenu: React.FC<Props> = ({ onItemClick }) => {
-  
+const BuildingMenu: React.FC<Props> = ({ onItemClick, playerId }) => {
   const [edificiosList, setEdificiosList] = useState<EdificioType[]>([]);
+  const [recursos, setRecursos] = useState<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null>(null);
 
   useEffect(() => {
+    const cargarRecursos = async () => {
+      try {
+        const recursosJugador = await getRecursoList();
+        setRecursos(recursosJugador);
+      } catch (error) {
+        console.error("Error al cargar recursos:", error);
+      }
+    };
+
     const fetchBuildings = async () => {
-      const response = await fetch('http://localhost:3000/api/buildings');
-      const data: EdificioType[] = await response.json()
-      data.shift()
+      const response = await fetch("http://localhost:3000/api/buildings");
+      const data: EdificioType[] = await response.json();
+      data.shift();
       setEdificiosList(data);
     };
 
-    fetchBuildings();
-  }, []);
-
-//=======
-//import Edificios, { Edificio } from "../../models/edificios";
-import { connectDB } from "@/app/libs/gamedb";
-//>>>>>>> page-organizado-componentes
-
-interface Props {
-  edificios: Edificios_menu[],
-  onItemClick: (index: number) => void;
-}
-
-const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick }) => {
-  const [recursos, setRecursos] = useState<Recurso[]>([]);
-
-  useEffect(() => {
-    // Cargar recursos iniciales o cualquier otra lógica necesaria al montar el componente
     cargarRecursos();
+    fetchBuildings();
+  }, [playerId]);
 
-  // Configura un temporizador para realizar consultas periódicas cada 5 segundos
-    //const intervalId = setInterval(cargarRecursos, 5000);
-
-  // Limpia el temporizador al desmontar el componente para evitar fugas de memoria
-    //return () => clearInterval(intervalId);
-}, []);
-
-  const cargarRecursos = async () => {
-    try {
-      const listaRecursos = await getRecursoList();
-      setRecursos(listaRecursos);
-    } catch (error) {
-      console.error("Error al cargar recursos:", error);
-    }
-  };
 
   const handleItemClick = async (index: number) => {
-    const edificioSeleccionado = edificios[index];
-    const costoRecursos = edificioSeleccionado.costoRecursos;
-    for (const recurso of costoRecursos) {
-      const recursoExistente = await findRecursoByName(recurso.name);
-      if (!recursoExistente || recursoExistente.cantidad < recurso.cantidad) {
-        console.error(`No se tienen suficientes ${recurso.name} para construir el edificio.`);
-        return; // Salir de la función si no hay suficientes recursos
-      }
-    }
-
-    try {
-      await onItemClick(index);
-      
-      // Actualizar la cantidad de recursos después de construir el edificio
-      for (const recurso of costoRecursos) {
-        await actualizarRecurso(recurso);
-      }
-
-      cargarRecursos(); 
-
-      // Lógica adicional después de crear el edificio y actualizar los recursos
-    } catch (error) {
-      console.error("Error al crear el edificio:", error);
-      // Manejar el error de alguna manera
-    }
-  };
+  const edificioSeleccionado = edificiosList[index];
+  const { agua, comida, chatarra } = edificioSeleccionado.costoRecursoscreacion;
   
-//>>>>>>> page-organizado-componentes
+  const recursosActuales = recursos;
+  if (!recursosActuales) {
+    console.error("Recursos no cargados");
+    return;
+  }
+  const { agua_jugador, comida_jugador, chatarra_jugador } = recursosActuales;
+  
+  try {
+    // Verificar si hay suficientes recursos para construir el edificio
+    if (agua_jugador < agua) {
+      console.error("No hay suficiente agua para construir el edificio.");
+      return;
+    }
+
+    if (comida_jugador < comida) {
+      console.error("No hay suficiente comida para construir el edificio.");
+      return;
+    }
+
+    if (chatarra_jugador < chatarra) {
+      console.error("No hay suficiente chatarra para construir el edificio.");
+      return;
+    }
+
+    await onItemClick(index);
+
+    // Actualizar los recursos después de la construcción del edificio
+    await Promise.all([
+      actualizarRecursoJugador({ name: "agua", cantidad: agua_jugador - agua }),
+      actualizarRecursoJugador({ name: "comida", cantidad: comida_jugador - comida }),
+      actualizarRecursoJugador({ name: "chatarra", cantidad: chatarra_jugador - chatarra })
+    ]);
+
+    // Recargar los recursos después de la actualización
+    //await cargarRecursos();
+  } catch (error) {
+    console.error("Error al crear el edificio:", error);
+  }
+};
+
+  
   return (
     <div className="p-5">
       {edificiosList.map((edificio, index) => (
