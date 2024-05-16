@@ -23,51 +23,52 @@
 //   };
 
   //////////dasdadasd
-import Partidas from "../models/partidas";
+import { PartidaType } from "../models/partidas";
+import { fetchSave, updateSave } from "./partida-seleccionada"; 
 
-export const getRecursoList = async (playerId: number): Promise<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null> => {
+export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null> => {
   try {
-    const partida = await Partidas.findOne({ player_id: playerId });
-
-    if (partida) {
-      const { agua_jugador, comida_jugador, chatarra_jugador } = partida.recursos;
-      return { agua_jugador, comida_jugador, chatarra_jugador };
-    } else {
-      console.error("No se encontró la partida del jugador.");
-      return null;
+    const partidaActual = await fetchSave(1000);
+    if (!partidaActual) {
+      throw new Error('Partida no encontrada');
     }
+
+    const { agua_jugador, comida_jugador, chatarra_jugador } = partidaActual.recursos;
+    return { agua_jugador, comida_jugador, chatarra_jugador };
   } catch (error) {
     console.error("Error al obtener los recursos del jugador:", error);
     return null;
   }
 };
 
-export const actualizarRecursoJugador = async (playerId: number, recurso: { name: string, cantidad: number }): Promise<void> => {
-  const partida = await Partidas.findOne({ player_id: playerId });
 
-  if (partida) {
+export const actualizarRecursoJugador = async (recurso: { name: string, cantidad: number }): Promise<void> => {
+  
+  const partidaActual = await fetchSave(1000);
+
+  if (partidaActual) {
     let recursoActualizado;
     switch (recurso.name) {
       case 'agua':
-        recursoActualizado = partida.recursos.agua_jugador - recurso.cantidad;
+        recursoActualizado = partidaActual.recursos.agua_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
-        partida.recursos.agua_jugador = recursoActualizado;
+        partidaActual.recursos.agua_jugador = recursoActualizado;
         break;
       case 'comida':
-        recursoActualizado = partida.recursos.comida_jugador - recurso.cantidad;
+        recursoActualizado = partidaActual.recursos.comida_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
-        partida.recursos.comida_jugador = recursoActualizado;
+        partidaActual.recursos.comida_jugador = recursoActualizado;
         break;
       case 'chatarra':
-        recursoActualizado = partida.recursos.chatarra_jugador - recurso.cantidad;
+        recursoActualizado = partidaActual.recursos.chatarra_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
-        partida.recursos.chatarra_jugador = recursoActualizado;
+        partidaActual.recursos.chatarra_jugador = recursoActualizado;
         break;
       default:
         throw new Error('Recurso desconocido.');
     }
 
-    await partida.save(); // Guarda la partida actualizada en la base de datos
+    await updateSave(partidaActual); // Guarda la partida actualizada en la base de datos
   } else {
     throw new Error('No se encontró la partida del jugador.');
   }

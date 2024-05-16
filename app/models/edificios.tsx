@@ -17,11 +17,11 @@ const schema = new mongoose.Schema<EdificioType>({
     name: String,
     descripcion: String,
     imagen: String,
-    costoRecursoscreacion: [{
+    costoRecursoscreacion: {
         agua: Number,
         comida: Number,
         chatarra: Number
-    }]
+    }
 });
 
 export default mongoose.models.Edificios || mongoose.model('Edificios', schema);

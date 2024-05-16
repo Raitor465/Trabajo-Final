@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 export type PartidaType = {
-    player_id: Number,
+    player_id: number,
     recursos:{
-        agua_jugador: Number,
-        comida_jugador: Number,
-        chatarra_jugador: Number
+        agua_jugador: number,
+        comida_jugador: number,
+        chatarra_jugador: number
     },
     terreno:{
         type: Record<string, number>

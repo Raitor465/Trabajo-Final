@@ -1,7 +1,7 @@
 // BuildingGrid.tsx
 import React, { useState, useEffect } from "react";
 import { EdificioType } from "@/app/models/edificios";
-import { partidaActual } from "@/app/services/partida-seleccionada";
+import { fetchSave } from "@/app/services/partida-seleccionada";
 import Partidas, { PartidaType } from "@/app/models/partidas";
 import { Edificios_menu } from "../../services/edificios-menu";
 import baseimage from '../images/placeholders/base_ph.png'
@@ -22,13 +22,13 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick }) => {
     // Simula la carga de datos de partidaActual
     const fetchPartidaActual = async () => {
       // Supongamos que partidaActual se obtiene de una llamada a una API o algún servicio
-      if (partidaActual) {
-        setTerreno(terreno || {});
-      }
-    };
+    const data = await fetchSave(1000)
+    
+    setTerreno(terreno || {});
+    
 
     fetchPartidaActual();
-  }, []);
+  }}, []);
   // partidaActual?.terreno
     
   // });
