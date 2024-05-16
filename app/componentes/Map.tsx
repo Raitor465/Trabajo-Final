@@ -86,13 +86,13 @@ import { StaticImageData } from "next/image";
 //<<<<<<< funcionalidad-edificios
 import baseimg from "../public/placeholders/base_ph.png"
 import { Edificios_menu } from "../services/edificios-menu";
-import Partidas, { PartidaType } from "../models/partidas";
+import { PartidaType } from "../models/partidas";
 //=======
 //import baseimg from '../componentes/images/placeholders/base_ph.png'
 //>>>>>>> page-organizado-componentes
 
 interface MapProps {
-  recursos: PartidaType[];
+  recursos: PartidaType['recursos'];
   edificios: Edificios_menu[];
 }
 
@@ -123,12 +123,14 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
     }
     setShowBuildMenu(false);
   };
+  
 
+  
   return (
     <main>
       <div className="h-screen w-screen bg-slate-900 flex flex-col">
         <div className="flex justify-start items-start bg-black">
-          {/* <Resources items={recursos} /> */}
+          <Resources items={recursos} />
         </div>
         <div className="flex flex-1 flex-col justify-end items-center relative">
           {/* <BuildingGrid buildingImages={buildingImages} onEmptyGroundClick={handleEmptyGroundClick} /> */}

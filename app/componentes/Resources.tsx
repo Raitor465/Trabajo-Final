@@ -1,6 +1,7 @@
 
 // Resources.tsx
 import React from "react";
+import { PartidaType } from "../models/partidas";
 
 interface Recurso {
   id: number;
@@ -12,16 +13,29 @@ interface Props {
   items: Recurso[];
 }
 
-const Resources: React.FC<Props> = ({ items }) => {
+type ResourcesProps = {
+  items: PartidaType['recursos'];
+};
+
+
+const Resources: React.FC<ResourcesProps> = ({ items }) => {
   return (
-    <div className="horizontal-list-container p-2">
-      {items.map((item) => (
-        <div key={item.id} className="list-item">
-          <span className="item-text">
-            {item.name} : {item.cantidad}
-          </span>
+    <div className="p-4 text-white">
+      <div className="flex flex-col space-y-2">
+        <div className="flex justify-between">
+          <span>Agua:</span>
+          <span>{items?.agua_jugador}</span>
         </div>
-      ))}
+        <div className="flex justify-between">
+          <span>Comida:</span>
+          <span>{items?.comida_jugador}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span>Chatarra:</span>
+          <span>{items?.chatarra_jugador}</span>
+        </div>
+      </div>
     </div>
   );
 };
