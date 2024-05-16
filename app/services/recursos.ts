@@ -1,51 +1,75 @@
 'use server'
-export type Recurso = {
-  id: number
-  name: string
-}
-const recursoList: Recurso[] = [
-  { id: 1, name: 'Agua'  },
-  { id: 2, name: 'Comida' },
-  { id: 3, name: 'Chatarra' },
-]
+// export type Recurso = {
+//   id: number
+//   name: string
+// }
+// const recursoList: Recurso[] = [
+//   { id: 1, name: 'Agua'  },
+//   { id: 2, name: 'Comida' },
+//   { id: 3, name: 'Chatarra' },
+// ]
 
-export const findRecursoById = async (id: number) => {
-  return recursoList.find(p => p.id === id)
-}
+// export const findRecursoById = async (id: number) => {
+//   return recursoList.find(p => p.id === id)
+// }
 
-export const findRecursoByName = async (name: string) => {
-  return recursoList.find(p => p.name === name)
-}
+// export const findRecursoByName = async (name: string) => {
+//   return recursoList.find(p => p.name === name)
+// }
 
-//<<<<<<< prueba-db
-//=======
-export const findRecursoByCantidad = async (cantidad: number) => {
-    return recursoList.find(c => c.cantidad === cantidad)
+
+// export const getRecursoList = async (): Promise<Recurso[] > => {
+//     return recursoList  // Devolver la lista
+//   };
+
+  //////////dasdadasd
+import Partidas from "../models/partidas";
+
+export const getRecursoList = async (playerId: number): Promise<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null> => {
+  try {
+    const partida = await Partidas.findOne({ player_id: playerId });
+
+    if (partida) {
+      const { agua_jugador, comida_jugador, chatarra_jugador } = partida.recursos;
+      return { agua_jugador, comida_jugador, chatarra_jugador };
+    } else {
+      console.error("No se encontró la partida del jugador.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error al obtener los recursos del jugador:", error);
+    return null;
   }
+};
 
-//>>>>>>> page-organizado-componentes
-export const getRecursoList = async (): Promise<Recurso[] > => {
-    return recursoList  // Devolver la lista
-  };
+export const actualizarRecursoJugador = async (playerId: number, recurso: { name: string, cantidad: number }): Promise<void> => {
+  const partida = await Partidas.findOne({ player_id: playerId });
 
-export const actualizarRecurso = async (recursoActualizado: Recurso): Promise<void> => {
-  const recursoExistente = await findRecursoByName(recursoActualizado.name); // Busca el recurso por nombre
-  if (recursoExistente) {
-    // Verifica si la cantidad después de la actualización será menor que cero
-    if (recursoExistente.cantidad - recursoActualizado.cantidad < 0) {
-      recursoExistente.cantidad = 0; // Establece la cantidad en cero
-    } else {
-      recursoExistente.cantidad -= recursoActualizado.cantidad; // Actualiza la cantidad del recurso
+  if (partida) {
+    let recursoActualizado;
+    switch (recurso.name) {
+      case 'agua':
+        recursoActualizado = partida.recursos.agua_jugador - recurso.cantidad;
+        if (recursoActualizado < 0) recursoActualizado = 0;
+        partida.recursos.agua_jugador = recursoActualizado;
+        break;
+      case 'comida':
+        recursoActualizado = partida.recursos.comida_jugador - recurso.cantidad;
+        if (recursoActualizado < 0) recursoActualizado = 0;
+        partida.recursos.comida_jugador = recursoActualizado;
+        break;
+      case 'chatarra':
+        recursoActualizado = partida.recursos.chatarra_jugador - recurso.cantidad;
+        if (recursoActualizado < 0) recursoActualizado = 0;
+        partida.recursos.chatarra_jugador = recursoActualizado;
+        break;
+      default:
+        throw new Error('Recurso desconocido.');
     }
 
-    const index = recursoList.findIndex((recurso) => recurso.id === recursoExistente.id);
-    if (index !== -1) {
-      recursoList[index] = recursoExistente; // Actualiza el recurso en la lista
-    } else {
-      throw new Error('No se encontró el recurso para actualizar en la lista.');
-    }
+    await partida.save(); // Guarda la partida actualizada en la base de datos
   } else {
-    throw new Error('No se encontró el recurso para actualizar.');
+    throw new Error('No se encontró la partida del jugador.');
   }
 };
 

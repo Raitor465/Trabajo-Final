@@ -1,20 +1,13 @@
 // BuildingGrid.tsx
-//<<<<<<< prueba-db
 import React, { useState, useEffect } from "react";
 import { EdificioType } from "@/app/models/edificios";
 import { partidaActual } from "@/app/services/partida-seleccionada";
-//import Partidas, { PartidaType } from "@/app/models/partidas";
-//import { Edificios } from "../../services/edificios-menu";
-//import baseimage from '../images/placeholders/base_ph.png'
-//import vacioimage from '../../public/placeholders/empty_ground_ph.png'
-//import { StaticImageData } from "next/image";
-//=======
-import React, { useState } from "react";
+import Partidas, { PartidaType } from "@/app/models/partidas";
 import { Edificios_menu } from "../../services/edificios-menu";
 import baseimage from '../images/placeholders/base_ph.png'
 import vacioimage from '../../public/placeholders/empty_ground_ph.png'
 import { StaticImageData } from "next/image";
-//>>>>>>> page-organizado-componentes
+
 
 
 interface Props {
@@ -22,22 +15,33 @@ interface Props {
 }
 
 const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick }) => {
-
   const [edificiosPartida, setEdificiosPartida] = useState<EdificioType[]>([]); 
+  const [terreno, setTerreno] = useState<Record<string, number>>({});
 
+  useEffect(() => {
+    // Simula la carga de datos de partidaActual
+    const fetchPartidaActual = async () => {
+      // Supongamos que partidaActual se obtiene de una llamada a una API o algún servicio
+      if (partidaActual) {
+        setTerreno(terreno || {});
+      }
+    };
+
+    fetchPartidaActual();
+  }, []);
   // partidaActual?.terreno
     
   // });
 
   const baseBuildingStyle = {
-    //backgroundImage: `url(${partidaActual?.terreno[1]})`,
+    backgroundImage: `url(${terreno[1]})`,
   };
 
   // console.log(buildingImages)
   const emptyGroundStyle = (index: number) => {
-    //const imageUrl = partidaActual?.terreno[index];
+    const imageUrl = terreno[index];
     return {
-      //backgroundImage: `url(${imageUrl})`,
+      backgroundImage: `url(${imageUrl})`,
     };
   };
 

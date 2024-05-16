@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 export type PartidaType = {
     player_id: Number,
     recursos:{
-        agua: Number,
-        comida: Number,
-        chatarra: Number
+        agua_jugador: Number,
+        comida_jugador: Number,
+        chatarra_jugador: Number
     },
     terreno:{
         type: Record<string, number>
@@ -15,9 +15,9 @@ export type PartidaType = {
 const schema = new mongoose.Schema<PartidaType>({
     player_id: Number,
     recursos:{
-        agua: Number,
-        comida: Number,
-        chatarra: Number
+        agua_jugador: Number,
+        comida_jugador: Number,
+        chatarra_jugador: Number
     },
     terreno:{
         type: Map,
