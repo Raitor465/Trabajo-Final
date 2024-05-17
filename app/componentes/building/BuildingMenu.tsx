@@ -17,7 +17,7 @@ const BuildingMenu: React.FC<Props> = ({ onItemClick, playerId }) => {
   useEffect(() => {
     const cargarRecursos = async () => {
       try {
-        const recursosJugador = await getRecursoList(playerId);
+        const recursosJugador = await getRecursoList();
         setRecursos(recursosJugador);
       } catch (error) {
         console.error("Error al cargar recursos:", error);
@@ -68,9 +68,9 @@ const BuildingMenu: React.FC<Props> = ({ onItemClick, playerId }) => {
 
     // Actualizar los recursos después de la construcción del edificio
     await Promise.all([
-      actualizarRecursoJugador(playerId, { name: "agua", cantidad: agua_jugador - agua }),
-      actualizarRecursoJugador(playerId, { name: "comida", cantidad: comida_jugador - comida }),
-      actualizarRecursoJugador(playerId, { name: "chatarra", cantidad: chatarra_jugador - chatarra })
+      actualizarRecursoJugador({ name: "agua", cantidad: agua_jugador - agua }),
+      actualizarRecursoJugador({ name: "comida", cantidad: comida_jugador - comida }),
+      actualizarRecursoJugador({ name: "chatarra", cantidad: chatarra_jugador - chatarra })
     ]);
 
     // Recargar los recursos después de la actualización
