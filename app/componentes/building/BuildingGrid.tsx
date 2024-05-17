@@ -27,7 +27,7 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick }) => {
     setTerreno(terreno || {});
     
 
-    fetchPartidaActual();
+    //fetchPartidaActual();
   }}, []);
   // partidaActual?.terreno
     

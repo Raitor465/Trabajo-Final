@@ -112,6 +112,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
     setShowConstruir(true);
     setSelectedBuilding(edificios[index]);
   };
+  console.log(recursos)
 
   const handleConstruirClick = (index: number) => {
     const newBuildingImages = [...buildingImages];

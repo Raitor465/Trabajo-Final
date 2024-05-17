@@ -19,6 +19,8 @@ type ResourcesProps = {
 
 
 const Resources: React.FC<ResourcesProps> = ({ items }) => {
+   console.log(items)
+  
   return (
     <div className="p-4 text-white">
       <div className="flex flex-col space-y-2">

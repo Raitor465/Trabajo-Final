@@ -6,7 +6,7 @@ export type PartidaType = {
         agua_jugador: number,
         comida_jugador: number,
         chatarra_jugador: number
-    },
+    } | null ,
     terreno:{
         type: Record<string, number>
     }

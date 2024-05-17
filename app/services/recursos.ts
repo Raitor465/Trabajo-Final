@@ -29,11 +29,17 @@ import { fetchSave, updateSave } from "./partida-seleccionada";
 export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null> => {
   try {
     const partidaActual = await fetchSave(1000);
+    // console.log(partidaActual)
     if (!partidaActual) {
       throw new Error('Partida no encontrada');
     }
 
-    const { agua_jugador, comida_jugador, chatarra_jugador } = partidaActual.recursos;
+    const recursos = partidaActual.recursos;
+    if (!recursos) {
+      throw new Error('Recursos no disponibles en la partida.');
+    }
+
+    const { agua_jugador, comida_jugador, chatarra_jugador }  = recursos;
     return { agua_jugador, comida_jugador, chatarra_jugador };
   } catch (error) {
     console.error("Error al obtener los recursos del jugador:", error);
@@ -45,24 +51,32 @@ export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_j
 export const actualizarRecursoJugador = async (recurso: { name: string, cantidad: number }): Promise<void> => {
   
   const partidaActual = await fetchSave(1000);
+  if (!partidaActual) {
+    throw new Error('No se encontró la partida del jugador.');
+  }
+
+  const recursos = partidaActual.recursos;
+  if (!recursos) {
+    throw new Error('Recursos no disponibles en la partida.');
+  }
 
   if (partidaActual) {
     let recursoActualizado;
     switch (recurso.name) {
       case 'agua':
-        recursoActualizado = partidaActual.recursos.agua_jugador - recurso.cantidad;
+        recursoActualizado = recursos.agua_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
-        partidaActual.recursos.agua_jugador = recursoActualizado;
+        recursos.agua_jugador = recursoActualizado;
         break;
       case 'comida':
-        recursoActualizado = partidaActual.recursos.comida_jugador - recurso.cantidad;
+        recursoActualizado = recursos.comida_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
-        partidaActual.recursos.comida_jugador = recursoActualizado;
+        recursos.comida_jugador = recursoActualizado;
         break;
       case 'chatarra':
-        recursoActualizado = partidaActual.recursos.chatarra_jugador - recurso.cantidad;
+        recursoActualizado = recursos.chatarra_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
-        partidaActual.recursos.chatarra_jugador = recursoActualizado;
+        recursos.chatarra_jugador = recursoActualizado;
         break;
       default:
         throw new Error('Recurso desconocido.');
