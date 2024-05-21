@@ -1,3 +1,4 @@
+import { EdificioType } from "../models/edificios";
 import partidas, { PartidaType } from "../models/partidas";
 
 export const fetchSave = async (userId: number): Promise<PartidaType | null> => {
@@ -10,6 +11,19 @@ export const fetchSave = async (userId: number): Promise<PartidaType | null> => 
     return null;
   }
 };
+
+export const fetchSaveEdificios = async (): Promise<EdificioType[] | null> => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/buildings`);
+    const data: EdificioType[] = await response.json()
+    return data;
+  } catch (error) {
+    console.error("Error fetching Edificios:", error);
+    return null;
+  }
+};
+
+
 
 export const updateSave = async (data: PartidaType): Promise<PartidaType | null> => {
   try {

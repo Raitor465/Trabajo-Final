@@ -8,9 +8,10 @@ import { PartidaType } from "@/app/models/partidas";
 interface Props {
   onItemClick: (index: number) => void;
   playerId: number; //para identificar al jugador
+  edificios: EdificioType[];
 }
 
-const BuildingMenu: React.FC<Props> = ({ onItemClick, playerId }) => {
+const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => {
   const [edificiosList, setEdificiosList] = useState<EdificioType[]>([]);
   const [recursos, setRecursos] = useState<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null>(null);
 
@@ -83,13 +84,13 @@ const BuildingMenu: React.FC<Props> = ({ onItemClick, playerId }) => {
   
   return (
     <div className="p-5">
-      {edificiosList.map((edificio, index) => (
+      {edificiosList.map((edificiosList, index) => (
         <div
-          key={edificio.id}
+          key={edificiosList.id}
           className="item-text bg-black cursor-pointer hover:bg-opacity-50"
           onClick={() => handleItemClick(index)} // Aquí llamamos a la función handleItemClick en lugar de onItemClick directamente
         >
-          {edificio.name} : {edificio.descripcion}
+          {edificiosList.name} : {edificiosList.descripcion}
         </div>
       ))}
     </div>

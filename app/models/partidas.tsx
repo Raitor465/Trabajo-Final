@@ -8,7 +8,8 @@ export type PartidaType = {
         chatarra_jugador: number
     } | null ,
     terreno:{
-        type: Record<string, number>
+        //type: Record<string, number>
+        [key:string] : number
     }
 }
 

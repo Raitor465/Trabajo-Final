@@ -7,7 +7,7 @@ export async function GET(request: Request, { params }: {params: Params}) {
     const { id }= params
     await connectDB()
     const partida = await Partidas.findOne({ id: Number(id) })
-    console.log(partida)
+    //console.log(partida)
     return NextResponse.json(partida)
 }
 
