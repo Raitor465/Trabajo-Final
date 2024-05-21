@@ -27,30 +27,41 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
         const terreno = data?.terreno;
         if (terreno && typeof terreno === 'object') {
           setTerreno(terreno);
-          // for(let i = 0; i < terreno.length; i++){
-          //   const element = terreno[i];
-            
-          //   if (edificios[0].id === element){
-          //     buildingImages?.push(edificios[0].imagen);
-          //     setBuildingImages(buildingImages)
-          //   } 
-          // }
+          const newBuildingImages = [];
+          for (const key in terreno) {
+            if(Object.prototype.hasOwnProperty.call(terreno, key)) {
+              //console.log(key)
+              //console.log(terreno[key])
+              const element = terreno[key];
+              // console.log(element)
+              const edificio = edificiosPartida.find(edificio => edificio.id === element);
+              //console.log(edificio)
+              if (edificio) {
+                newBuildingImages.push(edificio.imagen);
+                //console.log(newBuildingImages)
+              }
+            } 
+          }
+          setBuildingImages(newBuildingImages);
                    
         } else {
           setTerreno({});
+          setBuildingImages([]);
         }       
       
         }catch (error) {
         console.error("Error al cargar los datos de la partida:", error);
       }
     };
-  
     fetchPartidaActual();
+    // console.log(buildingImages)
+
   }, []);
-  // console.log(buildingImages)
+  //console.log(buildingImages)
   //console.log(edificios[0].id)
-  // console.log(terreno[0])
-  console.log(terreno)
+  // console.log(terreno.base)
+  // console.log(terreno[-1])
+  //console.log(edificios)
 
   const baseBuildingStyle = {
     backgroundImage: `url(${terreno[1]})`,
