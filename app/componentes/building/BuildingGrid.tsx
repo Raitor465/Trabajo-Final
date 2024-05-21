@@ -33,12 +33,12 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
               //console.log(key)
               //console.log(terreno[key])
               const element = terreno[key];
-              // console.log(element)
-              const edificio = edificiosPartida.find(edificio => edificio.id === element);
-              //console.log(edificio)
+              const edificio = edificios.find(edificio => edificio.id === element);
               if (edificio) {
                 newBuildingImages.push(edificio.imagen);
                 //console.log(newBuildingImages)
+              }else{
+                newBuildingImages.push('');
               }
             } 
           }
@@ -57,7 +57,7 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
     // console.log(buildingImages)
 
   }, []);
-  //console.log(buildingImages)
+  console.log(buildingImages)
   //console.log(edificios[0].id)
   // console.log(terreno.base)
   // console.log(terreno[-1])
