@@ -13,12 +13,15 @@ import { fetchSave } from "@/app/services/partida-seleccionada";
 interface Props {
   onEmptyGroundClick: (index: number) => void;
   edificios : EdificioType[];
+  onBuildGroundClick: (index: number) => void;
 }
 
-const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
+const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGroundClick}) => {
   const [edificiosPartida, setEdificiosPartida] = useState<EdificioType[]>([]); 
   const [terreno, setTerreno] = useState<Record<string, number>>({});
   const [buildingImages, setBuildingImages] = useState<string[]>([])
+  const [terrenoBool, setTerrenoBool] = useState<Record<string, boolean>>({});
+
   useEffect(() => {
     const fetchPartidaActual = async () => {
       try {
@@ -27,6 +30,7 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
         if (terreno && typeof terreno === 'object') {
           setTerreno(terreno);
           const newBuildingImages = [];
+          //const newTerrenoBool: Record<string, boolean> = {};
           for (const key in terreno) {
             if(Object.prototype.hasOwnProperty.call(terreno, key)) {
               //console.log(key)
@@ -36,16 +40,22 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
               if (edificio) {
                 newBuildingImages.push(edificio.imagen);
                 //console.log(newBuildingImages)
+                terrenoBool[key] = true;
               }else{
                 newBuildingImages.push('');
+                terrenoBool[key] = false;
               }
+              //console.log(terrenoBool)
             } 
           }
           setBuildingImages(newBuildingImages);
-                   
+          setTerrenoBool(terrenoBool);
+          
+          
         } else {
           setTerreno({});
           setBuildingImages([]);
+          setTerrenoBool({});
         }       
       
         }catch (error) {
@@ -53,27 +63,33 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios}) => {
       }
     };
     fetchPartidaActual();
-    // console.log(buildingImages)
-
   }, [edificios]);
+
   const getImageStyle = (imageUrl: string) => ({
     backgroundImage: `url(${imageUrl})`,
     backgroundSize: 'contain',
     backgroundPosition: 'center bottom',
     backgroundRepeat: 'no-repeat'
   })
-
   return (
     <div className="flex flex-row">
       {buildingImages.map((imageUrl, index) => (
         <div
           key={index}
           style={getImageStyle(imageUrl)}
-          className="h-56 w-56 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-25"
+          className="h-48 w-48 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-5"
           onClick={() => {
-            if (!imageUrl) {
+            //const key = index.toString();
+            //console.log(terrenoBool[index])
+            if (buildingImages[index] !== '') {
+              //console.log(terrenoBool[key])
+              onBuildGroundClick(index);
+            } else {
+              //console.log(terrenoBool)
+              //onBuildGroundClick(index);
               onEmptyGroundClick(index);
-            }}}
+            }
+          }}
         ></div>
       ))}
     </div>
