@@ -67,6 +67,9 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGr
 
   const getImageStyle = (imageUrl: string) => ({
     backgroundImage: `url(${imageUrl})`,
+    backgroundSize: 'contain',
+    backgroundPosition: 'center bottom',
+    backgroundRepeat: 'no-repeat'
   })
   return (
     <div className="flex flex-row">
@@ -87,6 +90,11 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGr
               onEmptyGroundClick(index);
             }
           }}
+          className="h-56 w-56 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-25"
+          onClick={() => {
+            if (!imageUrl) {
+              onEmptyGroundClick(index);
+            }}}
         ></div>
       ))}
     </div>
