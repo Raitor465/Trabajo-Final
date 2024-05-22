@@ -94,8 +94,7 @@ export const actualizarRecursoJugador = async (recurso: { name: string, cantidad
     // await getRecursoList()
     // console.log(partidaActual)
     return updatePartida;
-
-
+    
   } else {
     throw new Error('No se encontró la partida del jugador.');
   }

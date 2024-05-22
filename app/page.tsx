@@ -5,11 +5,14 @@ import { getEdificioList } from "./services/edificios-menu";
 import { getRecursoList} from "./services/recursos";
 import { PartidaType } from "./models/partidas";
 import { EdificioType } from "./models/edificios";
+import BuildingGrid from "./componentes/building/BuildingGrid";
 
 
 export default function Home() {
   const [recursosData, setRecursosData] = useState<PartidaType['recursos'] | null>(null);
   const [edificiosData, setEdificiosData] = useState<EdificioType[]>([]);
+  //const [terrenoData , setTerrenoData] = useState<PartidaType['terreno'] | null> (null); 
+  //const [terrenoBool, setTerrenoBool] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
 

@@ -17,6 +17,7 @@ interface MapProps {
   recursos: PartidaType['recursos'];
   edificios: EdificioType[] ;
   onRecursosUpdate : (updatedRecursos : PartidaType['recursos']) => void;
+  //terrenoBool:  Record<string, boolean>;
 }
 
 const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
@@ -25,29 +26,39 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
   const [showConstruir, setShowConstruir] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState<EdificioType>();
   const [selectedGround, setSelectedGround] = useState<number>();
+  const [indiceTerreno, setIndiceTerreno] = useState<number>(0);
   
   const handleEmptyGroundClick = (index: number) => {
     setShowBuildMenu(true);
     setSelectedGround(index);
+    setIndiceTerreno(index);
+    
+  };
+
+  const handleBuiltGroundClick = (index: number) => {
+    console.log('ffddyh')
+    setSelectedGround(index);
+    setIndiceTerreno(index);
+    
   };
 
   const handleItemClick = (index: number) => {
     setShowConstruir(true);
     setSelectedBuilding(edificios[index]);
   };
-  //console.log(recursos)
 
   const handleConstruirClick = (index: number) => {
-    const newBuildingImages = [...buildingImages];
-    newBuildingImages[1] = '/placeholders/base_ph.png';
-    const selectedImage = selectedBuilding?.imagen || null;
-    if (selectedImage !== null && index !== 1){
-      newBuildingImages[index] = selectedImage;
-      setBuildingImages(newBuildingImages);
-    }
-    // if(selectedBuilding){
-    //   const updatedPartida = await actualizarRecursoJugador({name:"chatarra ", cantidad:selectedBuilding.costoRecursoscreacion})
-    // }
+  //   const newBuildingImages = [...buildingImages];
+  //   newBuildingImages[1] = '/placeholders/base_ph.png';
+  //   const selectedImage = selectedBuilding?.imagen || null;
+  //   if (selectedImage !== null && index !== 1){
+  //     newBuildingImages[index] = selectedImage;
+  //     setBuildingImages(newBuildingImages);
+  //   }
+  //   // if(selectedBuilding){
+  //   //   const updatedPartida = await actualizarRecursoJugador({name:"chatarra ", cantidad:selectedBuilding.costoRecursoscreacion})
+  //   // }
+    setShowConstruir(false);
     setShowBuildMenu(false);
   };
   
@@ -60,7 +71,8 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
           <Resources items={recursos} />
         </div>
         <div className="flex flex-1 flex-col justify-end items-center relative">
-          <BuildingGrid  edificios={edificios} onEmptyGroundClick={handleEmptyGroundClick} />
+          <BuildingGrid   edificios={edificios} onEmptyGroundClick={handleEmptyGroundClick} 
+          onBuildGroundClick={handleBuiltGroundClick}/>
           <div className="h-48 w-screen flex relative">
             {/* Imagen de starcraf2 */}
             <img src="/placeholders/marco-starcraft2-png.png" alt="marco de abajo" className="w-full h-48" />
@@ -68,7 +80,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
             {showBuildMenu && (
               <div className="absolute top-0 w-full">
                 <div className="w-1/2 ">
-                  <BuildingMenu playerId={1000} edificios={edificios} onRecursosUpdate={onRecursosUpdate}onItemClick={handleItemClick} />
+                  <BuildingMenu  indiceTerreno={indiceTerreno}playerId={1000}  edificios={edificios} onRecursosUpdate={onRecursosUpdate}onItemClick={handleItemClick} />
                   {showConstruir && (
                     <div className="flex flex-row justify-end items-end">
                       <Button onClick={() => handleConstruirClick(selectedGround || 0)} text={"Construir"} className="bg-green-600 mr-1"/>
