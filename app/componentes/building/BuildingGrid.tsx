@@ -68,16 +68,16 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGr
   const getImageStyle = (imageUrl: string) => ({
     backgroundImage: `url(${imageUrl})`,
     backgroundSize: 'contain',
-    backgroundPosition: 'center bottom',
-    backgroundRepeat: 'no-repeat'
-  })
+    backgroundPosition: 'center bottom', 
+    backgroundRepeat: 'no-repeat',
+  });
   return (
     <div className="flex flex-row">
       {buildingImages.map((imageUrl, index) => (
         <div
           key={index}
           style={getImageStyle(imageUrl)}
-          className="h-48 w-48 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-5"
+          className="h-48 w-48 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-30"
           onClick={() => {
             //const key = index.toString();
             //console.log(terrenoBool[index])
