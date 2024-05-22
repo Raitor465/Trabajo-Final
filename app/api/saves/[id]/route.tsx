@@ -11,10 +11,10 @@ export async function GET(request: Request, { params }: {params: Params}) {
     return NextResponse.json(partida)
 }
 
-// export async function PATCH(request: Request, { params }: {params: Params}) {
-//     const { id }= params
-//     await connectDB()
-//     const data = await request.json()
-//     const partida = await Partidas.updateOne({ id: Number(id) }, {$set: data})
-//     return NextResponse.json(partida)
-// }
+export async function PATCH(request: Request, { params }: {params: Params}) {
+    const { id }= params
+    await connectDB()
+    const data = await request.json()
+    const partida = await Partidas.updateOne({ id: Number(id) }, {$set: data})
+    return NextResponse.json(partida)
+}

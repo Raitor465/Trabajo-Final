@@ -1,5 +1,6 @@
 'use server'
-// export type Recurso = {
+import { EdificioType } from "../models/edificios";
+// type RecursoType = {
 //   id: number
 //   name: string
 // }
@@ -48,7 +49,7 @@ export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_j
 };
 
 
-export const actualizarRecursoJugador = async (recurso: { name: string, cantidad: number }): Promise<void> => {
+export const actualizarRecursoJugador = async (recurso: { name: string, cantidad: number }): Promise<PartidaType | null> => {
   
   const partidaActual = await fetchSave(1000);
   if (!partidaActual) {
@@ -81,11 +82,24 @@ export const actualizarRecursoJugador = async (recurso: { name: string, cantidad
       default:
         throw new Error('Recurso desconocido.');
     }
+    //console.log(partidaActual)
 
-    await updateSave(partidaActual); // Guarda la partida actualizada en la base de datos
+    const updatePartida = await updateSave(partidaActual); // Guarda la partida actualizada en la base de datos
+    //console.log(partidaActual)
+    //window.location.reload();
+    //const intervalId = setInterval(getRecursoList, 1000);
+    if (!updatePartida){
+      throw new Error("Error al actualizar la partida.")
+    }
+    // await getRecursoList()
+    // console.log(partidaActual)
+    return updatePartida;
+
+
   } else {
     throw new Error('No se encontró la partida del jugador.');
   }
 };
+
 
 //recursos.ts y edificios.ts

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 //import { Edificios_menu } from "../../services/edificios-menu";
 import { actualizarRecursoJugador, getRecursoList } from "../../services/recursos";
-import { connectDB } from "@/app/libs/gamedb";
+//import { connectDB } from "@/app/libs/gamedb";
 import Edificios, { EdificioType } from "../../models/edificios";
-import { PartidaType } from "@/app/models/partidas";
+//import { PartidaType } from "@/app/models/partidas";
+import Button from "../ui/Button";
 
 interface Props {
   onItemClick: (index: number) => void;
@@ -14,7 +15,6 @@ interface Props {
 const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => {
   const [edificiosList, setEdificiosList] = useState<EdificioType[]>([]);
   const [recursos, setRecursos] = useState<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null>(null);
-
   useEffect(() => {
     const cargarRecursos = async () => {
       try {
@@ -40,7 +40,8 @@ const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => 
   const handleItemClick = async (index: number) => {
   const edificioSeleccionado = edificiosList[index];
   const { agua, comida, chatarra } = edificioSeleccionado.costoRecursoscreacion;
-  
+  //console.log("hola")
+
   const recursosActuales = recursos;
   if (!recursosActuales) {
     console.error("Recursos no cargados");
@@ -69,16 +70,27 @@ const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => 
 
     // Actualizar los recursos después de la construcción del edificio
     await Promise.all([
-      actualizarRecursoJugador({ name: "agua", cantidad: agua_jugador - agua }),
-      actualizarRecursoJugador({ name: "comida", cantidad: comida_jugador - comida }),
-      actualizarRecursoJugador({ name: "chatarra", cantidad: chatarra_jugador - chatarra })
+      actualizarRecursoJugador({ name: "agua", cantidad:  agua }),
+      actualizarRecursoJugador({ name: "comida", cantidad: comida }),
+      actualizarRecursoJugador({ name: "chatarra", cantidad: chatarra })    
     ]);
+    //console.log(agua_jugador)
 
     // Recargar los recursos después de la actualización
     //await cargarRecursos();
   } catch (error) {
     console.error("Error al crear el edificio:", error);
   }
+};
+const handleConstruirClick = (index: number) => {
+  // const newBuildingImages = [...buildingImages];
+  // newBuildingImages[1] = '/placeholders/base_ph.png';
+  // const selectedImage = selectedBuilding?.imagen || null;
+  // if (selectedImage !== null && index !== 1){
+  //   newBuildingImages[index] = selectedImage;
+  //   setBuildingImages(newBuildingImages);
+  // }
+  // setShowBuildMenu(false);
 };
 
   
@@ -91,6 +103,7 @@ const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => 
           onClick={() => handleItemClick(index)} // Aquí llamamos a la función handleItemClick en lugar de onItemClick directamente
         >
           {edificiosList.name} : {edificiosList.descripcion}
+
         </div>
       ))}
     </div>

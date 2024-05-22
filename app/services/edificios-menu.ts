@@ -40,46 +40,11 @@ import {fetchSaveEdificios, fetchSave, updateSave } from "./partida-seleccionada
 // Función para obtener la lista de edificios
 export const getEdificioList = async (): Promise<EdificioType[] | null> => {
   try {
-    // Obtener la partida actual
-    //const partidaActual = await fetchSave(1000); // Ajusta el parámetro según tu lógica de obtención de partida
-
-    // if (!partidaActual) {
-    //   throw new Error('Partida no encontrada');
-    // }
-    // const edificioList: EdificioType[] = [];
-
-    // Obtener los edificios relacionados con la partida actual
-    // const edificios = partidaActual.terreno; // Ajusta la propiedad según la estructura de tus datos
-    // base : 0 
-    // pos1 : -1 
-    // pos2 : -1
-    //console.log(edificios)
+    
     const edificios_menu = await fetchSaveEdificios();
     if(edificios_menu){
-      //console.log(edificios_menu[1])
     }
-    
 
-    // Verificar si se encontraron edificios
-    // if (!edificios || Object.keys(edificios).length === 0) {
-    //   throw new Error('No se encontraron edificios en la base de datos.');
-    // }
-
-    // Mapear los resultados a EdificioType
-    // const edificioList: EdificioType[] = edificios_menu?.map((edificio:EdificioType) => ({
-    //   id: edificio.id,
-    //   name: String(edificio.name), 
-    //   descripcion: String(edificio.descripcion), 
-    //   imagen: String(edificio.imagen), 
-    //   costoRecursoscreacion: {
-    //     agua: Number(edificio.costoRecursoscreacion.agua), 
-    //     comida: Number(edificio.costoRecursoscreacion.comida), 
-    //     chatarra: Number(edificio.costoRecursoscreacion.chatarra), 
-    //   }
-    // }));
-
-    // Devolver la lista de edificios
-    //console.log(edificioList)
     return edificios_menu;
   } catch (error) {
     console.error('Error al obtener la lista de edificios:', error);

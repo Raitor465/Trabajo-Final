@@ -19,21 +19,18 @@ type ResourcesProps = {
 
 
 const Resources: React.FC<ResourcesProps> = ({ items }) => {
-   //console.log(items)
-  
   return (
     <div className="p-4 text-white">
-      <div className="flex flex-col space-y-2">
-        <div className="flex justify-between">
+      <div className="flex space-x-4">
+        <div className="flex items-center space-x-2">
           <span>Agua:</span>
           <span>{items?.agua_jugador}</span>
         </div>
-        <div className="flex justify-between">
+        <div className="flex items-center space-x-2">
           <span>Comida:</span>
           <span>{items?.comida_jugador}</span>
         </div>
-
-        <div className="flex justify-between">
+        <div className="flex items-center space-x-2">
           <span>Chatarra:</span>
           <span>{items?.chatarra_jugador}</span>
         </div>

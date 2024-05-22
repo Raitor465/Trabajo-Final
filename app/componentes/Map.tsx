@@ -1,5 +1,4 @@
 // export default Map;
-'use client'
 import React, { useState } from "react";
 //import { Recurso } from "../services/recursos";
 //import { Edificio } from "../models/edificios";
