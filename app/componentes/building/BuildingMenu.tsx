@@ -10,9 +10,10 @@ interface Props {
   onItemClick: (index: number) => void;
   playerId: number; //para identificar al jugador
   edificios: EdificioType[];
+  onRecursosUpdate: (updatedRecursos: { agua_jugador: number; comida_jugador: number; chatarra_jugador: number }) => void;
 }
 
-const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => {
+const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId, onRecursosUpdate}) => {
   const [edificiosList, setEdificiosList] = useState<EdificioType[]>([]);
   const [recursos, setRecursos] = useState<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null>(null);
   useEffect(() => {
@@ -75,6 +76,15 @@ const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId }) => 
       actualizarRecursoJugador({ name: "chatarra", cantidad: chatarra })    
     ]);
     //console.log(agua_jugador)
+    
+    const recursosActualizados = {
+      agua_jugador : agua_jugador - agua,
+      comida_jugador : comida_jugador - comida,
+      chatarra_jugador : chatarra_jugador - chatarra,
+    };
+
+    setRecursos(recursosActualizados);
+    onRecursosUpdate(recursosActualizados);
 
     // Recargar los recursos después de la actualización
     //await cargarRecursos();

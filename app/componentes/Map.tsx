@@ -11,13 +11,15 @@ import { getEdificioList } from "../services/edificios-menu";
 import { PartidaType } from "../models/partidas";
 import { EdificioType } from "../models/edificios";
 import BuildingMenu from "./building/BuildingMenu";
+import { actualizarRecursoJugador } from "../services/recursos";
 
 interface MapProps {
   recursos: PartidaType['recursos'];
   edificios: EdificioType[] ;
+  onRecursosUpdate : (updatedRecursos : PartidaType['recursos']) => void;
 }
 
-const Map: React.FC<MapProps> = ({recursos, edificios}) => {
+const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
   const [buildingImages, setBuildingImages] = useState<string[]>(Array.from({ length: 5 }, () => ''));
   const [showBuildMenu, setShowBuildMenu] = useState(false);
   const [showConstruir, setShowConstruir] = useState(false);
@@ -43,6 +45,9 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
       newBuildingImages[index] = selectedImage;
       setBuildingImages(newBuildingImages);
     }
+    // if(selectedBuilding){
+    //   const updatedPartida = await actualizarRecursoJugador({name:"chatarra ", cantidad:selectedBuilding.costoRecursoscreacion})
+    // }
     setShowBuildMenu(false);
   };
   
@@ -63,7 +68,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
             {showBuildMenu && (
               <div className="absolute top-0 w-full">
                 <div className="w-1/2 ">
-                  <BuildingMenu playerId={1000} edificios={edificios} onItemClick={handleItemClick} />
+                  <BuildingMenu playerId={1000} edificios={edificios} onRecursosUpdate={onRecursosUpdate}onItemClick={handleItemClick} />
                   {showConstruir && (
                     <div className="flex flex-row justify-end items-end">
                       <Button onClick={() => handleConstruirClick(selectedGround || 0)} text={"Construir"} className="bg-green-600 mr-1"/>

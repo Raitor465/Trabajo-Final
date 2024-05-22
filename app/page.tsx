@@ -28,11 +28,14 @@ export default function Home() {
     //const intervalId = setInterval(fetchData);
   }, []);
   //window.location.reload();
+  const handleRecursosUpdate = (updateRecursos: PartidaType['recursos']) => {
+    setRecursosData(updateRecursos);
+  };
 
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between">  
-     <Map recursos={recursosData} edificios={edificiosData} ></Map>
+     {recursosData && <Map recursos={recursosData} edificios={edificiosData} onRecursosUpdate={handleRecursosUpdate}></Map>}
     </main>
   );
 }
