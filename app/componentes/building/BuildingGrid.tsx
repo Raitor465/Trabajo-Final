@@ -90,11 +90,6 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGr
               onEmptyGroundClick(index);
             }
           }}
-          className="h-56 w-56 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-25"
-          onClick={() => {
-            if (!imageUrl) {
-              onEmptyGroundClick(index);
-            }}}
         ></div>
       ))}
     </div>
