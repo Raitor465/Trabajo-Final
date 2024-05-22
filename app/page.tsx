@@ -2,7 +2,7 @@
 import React, {useState,useEffect} from "react";
 import Map from "./componentes/Map";
 import { getEdificioList } from "./services/edificios-menu";
-import { getRecursoList} from "./services/recursos";
+import { getRecursoList } from "./services/recursos";
 import { PartidaType } from "./models/partidas";
 import { EdificioType } from "./models/edificios";
 

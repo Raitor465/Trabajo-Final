@@ -50,15 +50,15 @@ const Map: React.FC<MapProps> = ({recursos, edificios}) => {
   
   return (
     <main>
-      <div className="h-screen w-screen bg-slate-900 flex flex-col">
+      <div className="h-screen w-screen flex flex-col bg-cover " style={{ backgroundImage: "url('/images/background.png')" , backgroundPosition: "center top -60px"}}>
         <div className="flex justify-start items-start bg-black">
           <Resources items={recursos} />
         </div>
         <div className="flex flex-1 flex-col justify-end items-center relative">
           <BuildingGrid  edificios={edificios} onEmptyGroundClick={handleEmptyGroundClick} />
-          <div className="h-48 w-screen flex relative">
+          <div className=" h-36 w-screen flex relative">
             {/* Imagen de starcraf2 */}
-            <img src="/placeholders/marco-starcraft2-png.png" alt="marco de abajo" className="w-full h-48" />
+            {/*<img src="/placeholders/marco-starcraft2-png.png" alt="marco de abajo" className="w-full h-48" />*/}
             {/* Contenedor de la imagen y la parte superior de BuildingMenu */}
             {showBuildMenu && (
               <div className="absolute top-0 w-full">
