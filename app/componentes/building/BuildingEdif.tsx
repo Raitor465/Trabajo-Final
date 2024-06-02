@@ -23,9 +23,9 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
   const [nivel, setNivel] = useState<number>(1);
 
   const handleItemClick = (index: number) => {
-    //const edificioSeleccionado = edificios[index];
-    //setSelectedBuilding(edificioSeleccionado);
-    //setNivel(edificioSeleccionado.nivel || 1);
+    // const edificioSeleccionado = edificios[index];
+    // setSelectedBuilding(edificioSeleccionado);
+    // setNivel(edificioSeleccionado.nivel || 1);
   };
 
   const handleMejorarEdificio = () => {
@@ -33,7 +33,7 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
       const nuevoNivel = nivel + 1;
       setNivel(nuevoNivel);
       selectedBuilding.nivel = nuevoNivel;
-      setSelectedBuilding({ ...selectedBuilding });
+      //setSelectedBuilding({ ...selectedBuilding });
     }
   };
 
@@ -64,7 +64,7 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
   };
 
   useEffect(() => {
-    if (selectedBuilding) {
+    
       const intervalo = getIntervalTime(edificios, nivel);
       const cantidadRecursoConseguido = getResourceAmount(edificios, nivel);
       
@@ -73,7 +73,7 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
       }, intervalo);
 
       return () => clearInterval(intervaloGeneracion);
-    }
+    
   }, [edificios, nivel]);
 
   return (
