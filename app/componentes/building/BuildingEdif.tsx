@@ -6,7 +6,7 @@ import { calculateTimeForBuildingChatarreria, calculateAmountForBuildingChatarre
 import Button from "../ui/Button";
 
 interface Props {
-  edificios: EdificioType;
+  edificios: EdificioType[];
 }
 
 /*
@@ -23,9 +23,9 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
   const [nivel, setNivel] = useState<number>(1);
 
   const handleItemClick = (index: number) => {
-    // const edificioSeleccionado = edificios[index];
-    // setSelectedBuilding(edificioSeleccionado);
-    // setNivel(edificioSeleccionado.nivel || 1);
+     const edificioSeleccionado = edificios[index];
+     setSelectedBuilding(edificioSeleccionado);
+     setNivel(edificioSeleccionado.nivel || 1);
   };
 
   const handleMejorarEdificio = () => {
@@ -33,7 +33,7 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
       const nuevoNivel = nivel + 1;
       setNivel(nuevoNivel);
       selectedBuilding.nivel = nuevoNivel;
-      //setSelectedBuilding({ ...selectedBuilding });
+      setSelectedBuilding({ ...selectedBuilding });
     }
   };
 
@@ -64,28 +64,28 @@ const BuildingEdif: React.FC<Props> = ({ edificios }) => {
   };
 
   useEffect(() => {
-    
-      const intervalo = getIntervalTime(edificios, nivel);
-      const cantidadRecursoConseguido = getResourceAmount(edificios, nivel);
+    if(selectedBuilding){
+      const intervalo = getIntervalTime(selectedBuilding, nivel);
+      const cantidadRecursoConseguido = getResourceAmount(selectedBuilding, nivel);
       
       const intervaloGeneracion = setInterval(async () => {
         console.log(`Generando ${cantidadRecursoConseguido} cada ${intervalo / 1000} segundos`);
       }, intervalo);
-
-      return () => clearInterval(intervaloGeneracion);
     
+      return () => clearInterval(intervaloGeneracion);
+    }
   }, [edificios, nivel]);
 
   return (
     <div className="p-5">
       {selectedBuilding && (
         <div className="mt-5 p-5 bg-black">
-          <h3 className="text-xl font-bold">{edificios.name}</h3>
-          <p>{edificios.descripcion}</p>
+          <h3 className="text-xl font-bold">{selectedBuilding.name}</h3>
+          <p>{selectedBuilding.descripcion}</p>
           <p>
-            Genera {getResourceAmount(edificios, nivel)}{" "}
+            Genera {getResourceAmount(selectedBuilding, nivel)}{" "}
             cada{" "}
-            {getIntervalTime(edificios, nivel) / 1000} segundos
+            {getIntervalTime(selectedBuilding, nivel) / 1000} segundos
           </p>
           <div className="flex justify-between items-center">
             <p>

@@ -27,16 +27,13 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
   const [indiceTerreno, setIndiceTerreno] = useState<number>(0);
   const [showBuildingEdif, setShowBuildingEdif] = useState(false);
 
-  const nivelAgua = 1; // Nivel del edificio de agua
-  const nivelComida = 1; // Nivel del edificio de comida
-  const nivelChatarra = 1; // Nivel del edificio de chatarra
 
   useEffect(() => {
     const fetchAndGenerateResources = async () => {
       await Promise.all([
-        generarRecursosAgua(1000, nivelAgua),
-        generarRecursosComida(1000, nivelComida),
-        generarRecursosChatarra(1000, nivelChatarra)
+        generarRecursosAgua(1000, edificios[1].nivel),
+        generarRecursosComida(1000, edificios[2].nivel),
+        generarRecursosChatarra(1000, edificios[3].nivel)
       ]);
     };
   
@@ -96,8 +93,8 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
               </div>
             </div>
           )}
-          {showBuildingEdif && selectedBuilding && (
-              <BuildingEdif edificios={selectedBuilding} />
+          {showBuildingEdif &&  (
+              <BuildingEdif edificios={edificios} />
             )}
         </div>
       </div>
