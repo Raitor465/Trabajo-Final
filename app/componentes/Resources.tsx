@@ -34,6 +34,10 @@ const Resources: React.FC<ResourcesProps> = ({ items }) => {
           <span>Chatarra:</span>
           <span>{items?.chatarra_jugador}</span>
         </div>
+        <div className="flex items-center space-x-2">
+          <span>Trabajadores:</span>
+          <span>{items?.trabajadores_jugador}</span>
+        </div>
       </div>
     </div>
   );

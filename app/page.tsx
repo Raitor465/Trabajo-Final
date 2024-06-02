@@ -52,13 +52,13 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">  
-      {showLogin && <Login onLogin={handleLogin} onRegister={handleRegister} />}
-      {showRegister && <Register onRegister={() => {setShowRegister(false); setShowLogin(true);}} />}
-      {showMap && (
-        recursosData && (
+      {/* {showLogin && <Login onLogin={handleLogin} onRegister={handleRegister} />}
+      {showRegister && <Register onRegister={() => {setShowRegister(false); setShowLogin(true);}} />} */}
+      {/* {showMap && ( */}
+        {/* recursosData && ( */}
           <Map recursos={recursosData} edificios={edificiosData} onRecursosUpdate={handleRecursosUpdate} />
-        )
-      )}
+        {/* ) */}
+      {/* )} */}
     </main>
   );
   

@@ -1,33 +1,9 @@
 'use server'
 import { EdificioType } from "../models/edificios";
-// type RecursoType = {
-//   id: number
-//   name: string
-// }
-// const recursoList: Recurso[] = [
-//   { id: 1, name: 'Agua'  },
-//   { id: 2, name: 'Comida' },
-//   { id: 3, name: 'Chatarra' },
-// ]
-
-// export const findRecursoById = async (id: number) => {
-//   return recursoList.find(p => p.id === id)
-// }
-
-// export const findRecursoByName = async (name: string) => {
-//   return recursoList.find(p => p.name === name)
-// }
-
-
-// export const getRecursoList = async (): Promise<Recurso[] > => {
-//     return recursoList  // Devolver la lista
-//   };
-
-  //////////dasdadasd
 import { PartidaType } from "../models/partidas";
 import { fetchSave, updateSave } from "./partida-seleccionada"; 
 
-export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number } | null> => {
+export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_jugador: number, chatarra_jugador: number, trabajadores_jugador: number } | null> => {
   try {
     const partidaActual = await fetchSave(1000);
     // console.log(partidaActual)
@@ -40,8 +16,8 @@ export const getRecursoList = async (): Promise<{ agua_jugador: number, comida_j
       throw new Error('Recursos no disponibles en la partida.');
     }
 
-    const { agua_jugador, comida_jugador, chatarra_jugador }  = recursos;
-    return { agua_jugador, comida_jugador, chatarra_jugador };
+    const { agua_jugador, comida_jugador, chatarra_jugador, trabajadores_jugador }  = recursos;
+    return { agua_jugador, comida_jugador, chatarra_jugador, trabajadores_jugador };
   } catch (error) {
     console.error("Error al obtener los recursos del jugador:", error);
     return null;
@@ -78,6 +54,11 @@ export const actualizarRecursoJugador = async (recurso: { name: string, cantidad
         recursoActualizado = recursos.chatarra_jugador - recurso.cantidad;
         if (recursoActualizado < 0) recursoActualizado = 0;
         recursos.chatarra_jugador = recursoActualizado;
+        break;
+        case 'trabajadores':
+        recursoActualizado = recursos.trabajadores_jugador - recurso.cantidad;
+        if (recursoActualizado < 0) recursoActualizado = 0;
+        recursos.trabajadores_jugador = recursoActualizado;
         break;
       default:
         throw new Error('Recurso desconocido.');

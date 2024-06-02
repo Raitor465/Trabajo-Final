@@ -2,13 +2,6 @@
 import React, { useState, useEffect, Key } from "react";
 import { EdificioType } from "@/app/models/edificios";
 import { fetchSave } from "@/app/services/partida-seleccionada";
-//import Partidas, { PartidaType } from "@/app/models/partidas";
-//import { getEdificioList } from "../../services/edificios-menu";
-//import baseimage from '../images/placeholders/base_ph.png'
-//import vacioimage from '../../public/placeholders/empty_ground_ph.png'
-//import { StaticImageData } from "next/image";
-
-
 
 interface Props {
   onEmptyGroundClick: (index: number) => void;
@@ -84,6 +77,7 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGr
             if (buildingImages[index] !== '') {
               //console.log(terrenoBool[key])
               onBuildGroundClick(index);
+              
             } else {
               //console.log(terrenoBool)
               //onBuildGroundClick(index);

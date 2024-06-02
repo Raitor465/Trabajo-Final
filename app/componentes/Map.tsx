@@ -1,23 +1,21 @@
 // export default Map;
-import React, { useState } from "react";
-//import { Recurso } from "../services/recursos";
-//import { Edificio } from "../models/edificios";
-//import BuildingMenu from "./building/BuildingMenu";
+import React, { useEffect, useState } from "react";
 import BuildingGrid from "./building/BuildingGrid";
+import BuildingMenu from "./building/BuildingMenu";
+import BuildingEdif from "./building/BuildingEdif";
 import Resources from "./Resources";
 import Button from "./ui/Button";
-//import baseimg from "../public/placeholders/base_ph.png"
-import { getEdificioList } from "../services/edificios-menu";
+//import { getEdificioList } from "../services/edificios-menu";
 import { PartidaType } from "../models/partidas";
 import { EdificioType } from "../models/edificios";
-import BuildingMenu from "./building/BuildingMenu";
-import { actualizarRecursoJugador } from "../services/recursos";
-
+//import { actualizarRecursoJugador } from "../services/recursos";
+import { generarRecursosAgua } from "./Edificios-funcional/pozo-fun";
+import { generarRecursosComida } from "./Edificios-funcional/criadero-fun";
+import { generarRecursosChatarra } from "./Edificios-funcional/chatarreria-fun";
 interface MapProps {
   recursos: PartidaType['recursos'];
   edificios: EdificioType[] ;
   onRecursosUpdate : (updatedRecursos : PartidaType['recursos']) => void;
-  //terrenoBool:  Record<string, boolean>;
 }
 
 const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
@@ -27,6 +25,23 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
   const [selectedBuilding, setSelectedBuilding] = useState<EdificioType>();
   const [selectedGround, setSelectedGround] = useState<number>();
   const [indiceTerreno, setIndiceTerreno] = useState<number>(0);
+  const [showProduction, setshowProduction,] = useState(false);
+
+  const nivelAgua = 1; // Nivel del edificio de agua
+  const nivelComida = 1; // Nivel del edificio de comida
+  const nivelChatarra = 1; // Nivel del edificio de chatarra
+
+  useEffect(() => {
+    const fetchAndGenerateResources = async () => {
+      await Promise.all([
+        generarRecursosAgua(1000, nivelAgua),
+        generarRecursosComida(1000, nivelComida),
+        generarRecursosChatarra(1000, nivelChatarra)
+      ]);
+    };
+  
+    fetchAndGenerateResources();
+  }, []);
   
   const handleEmptyGroundClick = (index: number) => {
     setShowBuildMenu(true);
@@ -37,6 +52,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
 
   const handleBuiltGroundClick = (index: number) => {
     console.log('ffddyh')
+    setShowBuildMenu(false);
     setSelectedGround(index);
     setIndiceTerreno(index);
     
@@ -60,6 +76,7 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
   //   // }
     setShowConstruir(false);
     setShowBuildMenu(false);
+    // setshowProduction(true);
   };
   
 
@@ -90,6 +107,11 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
                 </div>
               </div>
             )}
+            <div className="absolute top-0 w-full">
+            <div className="w-1/2 ">
+              <BuildingEdif edificios={edificios} onBuildGroundClick={handleBuiltGroundClick}/>
+            </div>
+          </div>
           </div>
         </div>
       </div>
