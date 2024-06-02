@@ -9,7 +9,7 @@ interface Props {
   onBuildGroundClick: (index: number) => void;
 }
 
-const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGroundClick}) => {
+const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGroundClick }) => {
   const [edificiosPartida, setEdificiosPartida] = useState<EdificioType[]>([]); 
   const [terreno, setTerreno] = useState<Record<string, number>>({});
   const [buildingImages, setBuildingImages] = useState<string[]>([])
@@ -72,15 +72,9 @@ const BuildingGrid: React.FC<Props> = ({onEmptyGroundClick, edificios, onBuildGr
           style={getImageStyle(imageUrl)}
           className="h-48 w-48 bg-white bg-cover bg-opacity-0 cursor-pointer hover:bg-opacity-30"
           onClick={() => {
-            //const key = index.toString();
-            //console.log(terrenoBool[index])
-            if (buildingImages[index] !== '') {
-              //console.log(terrenoBool[key])
+            if (buildingImages[index] !== '') { // Aquí se verifica si el edificio está construido
               onBuildGroundClick(index);
-              
             } else {
-              //console.log(terrenoBool)
-              //onBuildGroundClick(index);
               onEmptyGroundClick(index);
             }
           }}
