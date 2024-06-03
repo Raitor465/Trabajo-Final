@@ -11,6 +11,7 @@ export type EdificioType = {
         chatarra: number
     };
     nivel: number;
+    trabajadores: number;
 }
 
 const schema = new mongoose.Schema<EdificioType>({
@@ -23,7 +24,8 @@ const schema = new mongoose.Schema<EdificioType>({
         comida: Number,
         chatarra: Number
     },
-    nivel: Number
+    nivel: Number,
+    trabajadores: Number
 });
 
 export default mongoose.models.Edificios || mongoose.model('Edificios', schema);

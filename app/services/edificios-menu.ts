@@ -1,7 +1,7 @@
 'use server'
-import Edificios, {EdificioType} from "../models/edificios";
-import { PartidaType } from "../models/partidas";
-import {fetchSaveEdificios, fetchSave, updateSave } from "./partida-seleccionada"; 
+import {EdificioType} from "../models/edificios";
+//import { PartidaType } from "../models/partidas";
+import {fetchSaveEdificios, actualizarEdificio } from "./partida-seleccionada"; 
  
 
 
@@ -17,5 +17,17 @@ export const getEdificioList = async (): Promise<EdificioType[] | null> => {
   } catch (error) {
     console.error('Error al obtener la lista de edificios:', error);
     return null;
+  }
+};
+
+// Esta función actualiza el nivel de un edificio en la base de datos
+export const actualizarNivelEdificio = async (edificioId: number, nuevoNivel: number): Promise<boolean> => {
+  try {
+    // Actualizar el nivel del edificio en la base de datos utilizando la función de partida-seleccionada
+    await actualizarEdificio(edificioId, { nivel: nuevoNivel });
+    return true; // Indicar que la actualización fue exitosa
+  } catch (error) {
+    console.error("Error al actualizar el nivel del edificio:", error);
+    return false; // Indicar que la actualización falló
   }
 };

@@ -14,12 +14,12 @@ import { generarRecursosComida } from "./Edificios-funcional/criadero-fun";
 import { generarRecursosChatarra } from "./Edificios-funcional/chatarreria-fun";
 interface MapProps {
   recursos: PartidaType['recursos'];
-  edificios: EdificioType[] ;
+  edificios: EdificioType[];
   onRecursosUpdate : (updatedRecursos : PartidaType['recursos']) => void;
 }
 
 const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
-  const [buildingImages, setBuildingImages] = useState<string[]>(Array.from({ length: 5 }, () => ''));
+  //const [buildingImages, setBuildingImages] = useState<string[]>(Array.from({ length: 5 }, () => ''));
   const [showBuildMenu, setShowBuildMenu] = useState(false);
   const [showConstruir, setShowConstruir] = useState(false);
   const [selectedBuilding, setSelectedBuilding] = useState<EdificioType>();
@@ -27,18 +27,26 @@ const Map: React.FC<MapProps> = ({recursos, edificios,onRecursosUpdate}) => {
   const [indiceTerreno, setIndiceTerreno] = useState<number>(0);
   const [showBuildingEdif, setShowBuildingEdif] = useState(false);
 
-
+  //console.log(edificios[1].name)
   useEffect(() => {
     const fetchAndGenerateResources = async () => {
-      await Promise.all([
-        generarRecursosAgua(1000, edificios[1].nivel),
-        generarRecursosComida(1000, edificios[2].nivel),
-        generarRecursosChatarra(1000, edificios[3].nivel)
-      ]);
+      // Verificamos que los índices de los edificios existen antes de acceder a `nivel`
+      if (edificios[1] && edificios[2] && edificios[3]) {
+        //console.log(edificios[1].nivel)
+        await Promise.all([
+          //console.log(edificios[3].name),
+          generarRecursosAgua(1000, edificios[1].nivel),
+          generarRecursosComida(1000, edificios[2].nivel),
+          generarRecursosChatarra(1000, edificios[3].nivel)
+        ]);
+      }else{
+        //console.log("no funcaaaaaa")
+        //console.log(edificios[1].name)
+      }
     };
-  
+
     fetchAndGenerateResources();
-  }, []);
+  }, [edificios]);
   
   const handleEmptyGroundClick = (index: number) => {
     setShowBuildMenu(true);

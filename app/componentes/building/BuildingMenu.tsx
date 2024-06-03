@@ -23,7 +23,8 @@ const BuildingMenu: React.FC<Props> = ({ edificios, onItemClick, playerId, onRec
         console.error("Error al cargar recursos:", error);
       }
     };
-
+    
+    //console.log(edificios[1].name)
     const fetchBuildings = async () => {
       const response = await fetch("http://localhost:3000/api/buildings");
       const data: EdificioType[] = await response.json();
